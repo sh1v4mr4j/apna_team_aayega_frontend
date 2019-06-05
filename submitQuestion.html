@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Add Question</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body style="background-color: #fce6f1">
+        <nav class="navbar navbar-expand-lg" style="background-color: #f30067">
+                <a class="navbar-brand" href="#" style="color: black">Navbar</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="#" style="color: black">Home <span class="sr-only">(current)</span></a>
+                    
+                  </div>
+                </div>
+              </nav>
+              <div class="container-fluid" style="margin-top: 3%; margin-bottom: 5%">
+                  <div class="row">
+                      <div class="col-lg-2"></div>
+                      <div class="col-lg-7">
+                            <div class="input-group input-group-lg">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="inputGroup-sizing-lg2">Question Name</span>
+                                    </div>
+                                    <input type="text" id="questionName" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"  required="true">
+                                  </div>
+                                  <div class="input-group input-group-lg" style="margin-top: 3%">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text" id="inputGroup-sizing-lg2">Question Code</span>
+                                        </div>
+                                        <input type="text" id="questionCode" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"  required="true">
+                                      </div>
+                                      <div class="row" style="margin-top: 3%;margin-left: 0%">
+                                            <button type="button" class="btn btn-primary" id="Adhoc"style="background-color: #f30067;color:white;border: transparent" onclick="addInput('Adhoc')"><b>Adhoc</b></button>
+                                            <button type="button" class="btn btn-primary" id="Linkedlist" style="background-color: #f30067;color:white;border: transparent;margin-left:2%" onclick="addInput('LinkedList')"><b>Linked List</b></button>
+                                            <button type="button" class="btn btn-primary" id="Trees"style="background-color: #f30067;color:white;border: transparent;margin-left:2%" onclick="addInput('Trees')"><b>Trees</b></button>
+                                            <button type="button" class="btn btn-primary"id="Graph" style="background-color: #f30067;color:white;border: transparent;margin-left:2%" onclick="addInput('Graph')"><b>Graph</b></button>
+                                            <button type="button" class="btn btn-primary" id="DP" style="background-color: #f30067;color:white;border: transparent;margin-left:2%" onclick="addInput('DP')"><b>DP</b></button>
+                                      </div>
+                                      <div class="input-group input-group-lg" style="margin-top: 3%">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-lg2">tags</span>
+                                            </div>
+                                            <input type="text" id="tags" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"  required="true">
+                                          </div>
+                            <div style="margin-top: 2%">
+                                <h6>Describe your question here:-> </h6>
+                                <textarea rows="20" cols="118" id="statement" required="true" ></textarea>
+                            </div>
+                            <div style="margin-top: 2%">
+                              <h6>Input Format:-)</h6>
+                                <textarea rows="5" cols ="118" id="inputFormat"  required="true"></textarea>
+                            </div>
+                            <div style="margin-top: 2%">
+                              <h6>Output Format;-)</h6>
+                              <textarea rows="5" cols ="118" id="outputFormat"  required="true"></textarea>
+                          </div>
+                          <div style="margin-top: 2%">
+                                <h6>Sample Input;-)</h6>
+                                <textarea rows="5" cols ="118" id="sampleInput" required="true"></textarea>
+                            </div>
+                            <div style="margin-top: 2%">
+                                    <h6>Sample Output;-)</h6>
+                                    <textarea rows="5" cols ="118" id="sampleOutput"  required="true"></textarea>
+                            </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-9"></div>
+                    <div class="col-lg-1">
+                      <button type="button" class="btn btn-primary" style="background-color: #f30067; margin-top: 25%; height:80%; width:120%; margin-left:38%;color:white;border: transparent" onclick="addQuestion()" ><b>ADD</b></button>
+
+                    </div>
+                  </div>
+              </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            function addQuestion()
+            {
+
+                let questionName=document.getElementById('questionName').value;
+                let questionCode=document.getElementById('questionCode').value;
+                let statement=document.getElementById('statement').value.split("\n");
+                let inputFormat=document.getElementById('inputFormat').value.split("\n");
+                let outputFormat=document.getElementById('outputFormat').value.split("\n");
+                let sampleInput=document.getElementById('sampleInput').value.split("\n");
+                let sampleOutput=document.getElementById('sampleOutput').value.split("\n");
+                let tags=document.getElementById('tags').value.split(",");
+
+                document.getElementById('questionName').value='';
+                document.getElementById('questionCode').value='';
+                document.getElementById('statement').value='';
+                document.getElementById('inputFormat').value='';
+                document.getElementById('outputFormat').value='';
+                document.getElementById('sampleInput').value='';
+                document.getElementById('sampleOutput').value='';
+                document.getElementById('tags').value='';
+
+                
+                
+            
+                axios.post('http://localhost:3000/question',{
+                    questionName:questionName,
+                    questionCode:questionCode,
+                    statement:statement,
+                    inputFormat:inputFormat,
+                    outputFormat:outputFormat,
+                    sampleInput:sampleInput,
+                    sampleOutput:sampleOutput,
+                    tags:tags
+                 }).then(res=>{
+                     console.log("submitted");
+                 }).catch(err=>{
+                     console.log(err);
+                 })
+            }
+
+
+
+
+            function addInput(tag){
+                    document.getElementById('tags').value+=`${tag}, `
+                    document.getElementById(`${tag}`).disabled=true;
+            }
+
+
+
+        </script>
+</body>
+</html>

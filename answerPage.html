@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Answer</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+<body style="background-color: #fce6f1">
+
+        <nav class="navbar navbar-expand-lg" style="background-color: #f30067">
+                <a class="navbar-brand" href="#" style="color: black"><span style="color:white"><b>Apna Team Aayega</b></span></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="main.html" style="color: black"><span style="color:white">Questions</span> <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown" style="margin-left:350%">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: black" >
+                        <img src="images.png" style="height: 20px; width: 20px; margin-right: 8%"><span style="color:white" id="uname">username</span>
+                      </a>
+                      <div class="dropdown-menu" style="margin-left:-30%" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" class="dropdown-divider" href="#">
+                            <div class="row"><img src="propic.png" style="width: 20px; height: 20px">Profile</div>
+                            <div class="dropdown-divider"></div></a>
+                        <a class="dropdown-item" class="dropdown-divider" href="#"><div class="row"><img src="settings.png" style="width: 20px; height: 20px"><span> Settings</span></div>
+                            <div class="dropdown-divider"></div></a>
+                        <a class="dropdown-item" class="dropdown-divider" href="#"><div class="row"><img src="logout.png" style="width: 20px; height: 20px">Logout</div>
+                            <div class="dropdown-divider"></div></a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+    <div class="container-fluid" style="margin-bottom: 10%">
+        <div class="row">
+            <div class="col-lg-2">
+
+            </div>
+            <div class="col-lg-7">
+                <div id='getQuestion'>
+                        
+
+                    
+                </div>
+                <div id="getAnswer">
+                    
+                </div>
+                        <div>
+                                <div class="dropdown">
+                                        <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 3%">
+                                          Submit Your Answer
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <div style="margin-top: 2%">
+                                                        <h6>Your Answer</h6>
+                                                          <textarea rows="5" cols ="118" style="border-color: red; background-color: rgba(185, 177, 161, 0)" id="answer"></textarea>
+                                                         <span>Complexity</span> <input type="text" id="complexity" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"  required="true">
+                                                </div>
+                                                <button type="button" class="btn btn-outline-danger" style="margin-top: 2%" onclick="submitAnswer()">Submit</button>
+                                        </div>
+                                 </div>
+                        </div>
+
+            </div>
+        </div>
+
+    </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <script>
+            let x=localStorage.getItem('questionCode');
+            document.title=x;
+            let i=0;
+            let qdata;
+            axios.get(`http://localhost:3000/question/${x}`)
+            .then(res=>{
+                qdata=res.data;
+                console.log(qdata)
+                document.getElementById('getQuestion').innerHTML+=` <div class="jumbotron" style="margin-top: 2%">
+                            <h1 class="display-4"><b>Q)</b> <span>${res.data.questionName}</span></h1>
+                            <p class="lead"></p><b>CODE : </b><span>${res.data.questionCode}</span></p>
+                            <hr class="my-4">
+                            <p>Tags : <span>${res.data.tags[0]}</span></p>
+                            <hr class="my-4">
+                            <p><b>Statement :</b> <pre id="statement"></pre></p>
+                            <br>
+                            <hr class="my-4">
+                            <p><b>Input Format :</b> <pre id="inputFormat"></pre> </p>
+                            <br>
+                            <hr class="my-4">
+                            <p><b>Output Format :</b> <pre id="outputFormat"></pre><br></p>
+                            <br>
+                            <hr class="my-4">
+                            <p><b>Sample Input :</b> <pre id="sampleInput"></pre></p>
+                            <hr class="my-4">
+                            <p><b>Sample Output :</b> <pre id="sampleOutput"></pre></p>
+                          </div>`
+
+                            
+                          
+                        for(let j=0;j<res.data.statement.length;j++)
+                                document.getElementById('statement').innerHTML+=`${res.data.statement[j]}<br>`;
+
+                        for(let j=0;j<res.data.inputFormat.length;j++)
+                                document.getElementById('inputFormat').innerHTML+=`${res.data.inputFormat[j]}<br>`;
+
+                        for(let j=0;j<res.data.outputFormat.length;j++)
+                                document.getElementById('outputFormat').innerHTML+=`${res.data.outputFormat[j]}<br>`;
+
+                        for(let j=0;j<res.data.sampleInput.length;j++)
+                                document.getElementById('sampleInput').innerHTML+=`${res.data.sampleInput[j]}<br>`;
+
+                       for(let j=0;j<res.data.sampleOutput.length;j++)
+                                document.getElementById('sampleOutput').innerHTML+=`${res.data.sampleOutput[j]}<br>`;
+
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+
+            
+           let qc=localStorage.getItem('questionCode') 
+           let upv;
+           let downv;
+
+            axios.get(`http://localhost:3000/answer/${qc}`)
+            .then(res=>{
+                    
+                    upv=res.data;
+                    downv=res.data;
+                    for(let k=0;k<res.data.length;k++){
+
+                        
+                document.getElementById('getAnswer').innerHTML+=`<div style="margin-top: 2%">
+                            <h5>Answer : ${k+1}<h5>
+                            <h6>username</h6>
+                            <textarea rows="20" cols="118" >${res.data[k].answer}</textarea>
+                            <span>Complexity : ${res.data[k].complexity}</span> 
+                            <div class="row">
+                                    <button style="margin-left:2%" onclick="upVote(${k})" id="u${k}"><i class="fas fa-thumbs-up"><sup class="badge badge-light" id="upCount${k}" >${res.data[k].upVotes}</sup></i></button>
+                                    <button style="margin-left:2%" onclick="downVote(${k})" id="d${k}"><i class="fas fa-thumbs-down"><sup class="badge badge-light" id="downCount${k}" >${res.data[k].downVotes}</sup></i></button>
+                            </div>
+                    </div>`
+                }
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+
+        function submitAnswer()
+            {
+                let answer=document.getElementById('answer').value;
+                let complexity=document.getElementById('complexity').value;
+
+                document.getElementById('answer').value='';
+                document.getElementById('complexity').value='';
+
+                axios.post('http://localhost:3000/answer',{
+                    questionCode:qdata.questionCode,
+                    answer:answer,
+                    complexity:complexity
+                })
+                .then(res=>{
+                    //console.log(res)
+                })
+                .catch(err=>{
+                    console.log(err)
+                })
+            }
+
+            function upVote(x){
+                upv[x].upVotes++;
+                
+                
+                document.getElementById(`upCount${x}`).innerHTML=upv[x].upVotes;
+
+                axios.put(`http://localhost:3000/answer/${upv[x]._id}`,{
+                    upVotes:upv[x].upVotes,
+                    downVotes:upv[x].downVotes
+
+                })
+                .then(res=>{
+                    console.log(res)
+                })
+                .catch(err=>{
+                    console.log(err)
+                })
+                document.getElementById(`u${x}`).disabled=true;
+            }
+
+            function downVote(y){
+                downv[y].downVotes++;
+                document.getElementById(`downCount${y}`).innerHTML=downv[y].downVotes;
+                axios.put(`http://localhost:3000/answer/${downv[y]._id}`,{
+                    upVotes:upv[`${y}`].upVotes,
+                    downVotes:upv[`${y}`].downVotes
+
+                })
+                .then(res=>{
+                    console.log(res)
+                })
+                .catch(err=>{
+                    console.log(err)
+                })
+
+                document.getElementById(`d${y}`).disabled=true;
+                
+            }
+
+            document.getElementById('uname').innerHTML=localStorage.getItem('email');
+
+        </script>
+    
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Login || Signup</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body style="background-color: #fce6f1">
+    <div class= "container-fluid">
+            <div>
+                <nav class="navbar navbar-light" style="height: 9%; background-color:#f30067; margin-left: -2%; margin-right: -2%;">
+                    <a class="navbar-brand" style="margin-left:2%"><b style="color:white">Apna Team Aayega</b></a>
+                                    <div class="form-row" style="margin-left:50%">
+                                      <div class="col">
+                                        <input type="email" class="form-control form-control-sm" style="margin-left:-2%" placeholder="name@example.com" id="loginId">
+                                      </div>
+                                      <div class="col">
+                                        <input type="password" class="form-control form-control-sm" style="margin-left:-3%" placeholder="Password" id="loginPassword">
+                                      </div>
+                                    </div>
+                           
+                      <button class="btn btn-primary my-2 my-sm-0" type="submit" onclick="logIn()" style="margin-right: 1%;background-color: #ffe2e2;border:transparent;color:black">Login</button>
+                    
+                  </nav>
+                </div>      
+        <div class="row" style="margin-top: 3%">
+            <div class="col-lg-8"><img src="apna_team.jpg" style="height: 56%;width: 100%"></div>
+            <div class="col-lg-4">
+                    <div class="card" style="max-width: 22rem; border-color:black">
+                            <div class="card-header"><h4>Create new account</h4></div>
+                            <div class="card-body">
+                            
+                                    <div class="form-group">
+                                            <h5 class="card-title" style="color: #393e46">Name</h5>
+                                            <div class="row">
+                                      <div class="col">
+                                        <input type="text" class="form-control" placeholder="First name" id="firstname">
+                                      </div>
+                                      <div class="col">
+                                        <input type="text" class="form-control" placeholder="Last name" id="lastname">
+                                    </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="username" style="color:#393e46">Username</label>
+                                        <input  class="form-control"type="text" name="username" id="username" placeholder="Username" id="username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dateofBirth" style="color:#393e46">date of Birth</label>
+                                        <input  class="form-control"type="text" name="dateofBirth" id="dateofBirth" placeholder="DD/MM/YY">
+                                    </div>
+                                        <div class="form-group">
+                                          <label for="exampleInputEmail1" style="color: #393e46">Email address</label>
+                                          <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="name@example.com">
+                                          <small id="emailHelp" class="form-text text-muted" style="color: #393e46">We'll never share your email with anyone else.</small>
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="exampleInputPassword1" style="color: #393e46">Password</label>
+                                          <input type="password" class="form-control" id="password" placeholder="Password">
+                                        </div>
+                                        <button  class="btn btn-primary" style="background-color: #f30067;border:transparent;margin-left: 76%" onclick="submitForm()">Submit</button>
+                                      </form>
+                            </div>
+                          </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      localStorage.clear();
+        function submitForm(){
+          let firstname=document.getElementById('firstname').value;
+          let lastname=document.getElementById('lastname').value;
+          let username=document.getElementById('username').value;
+          let dateofBirth=document.getElementById('dateofBirth').value;
+          let email=document.getElementById('email').value;
+          let password=document.getElementById('password').value;
+
+          document.getElementById('firstname').value='';
+          document.getElementById('lastname').value='';
+          document.getElementById('username').value='';
+          document.getElementById('dateofBirth').value='';
+          document.getElementById('email').value='';
+          document.getElementById('password').value='';
+
+
+          
+
+
+          axios.post('http://localhost:3000/user',{
+            firstname:firstname,
+	          lastname:lastname,
+	          username:username,
+	          dateofBirth:dateofBirth,
+	          email:email,
+	          password:password
+          })
+          .then(function(res){
+            console.log(res);
+          })
+          .catch(function(error){
+            console.log(error);
+          })
+
+
+        }
+
+      function logIn()
+      {
+          let email=document.getElementById('loginId').value;
+          let password=document.getElementById('loginPassword').value;
+
+          document.getElementById('loginId').value='';
+          document.getElementById('loginPassword').value='';
+
+          axios.post('http://localhost:3000/user/login',{
+            email:email,
+            password : password
+          })
+          .then(res=>{
+              console.log(res.data.message)
+              if(res.data.message==="Authentication successful")
+              {
+                
+                localStorage.setItem('email', email)
+                localStorage.setItem('token', res.data.token)
+                window.open('main.html',"_self");
+              }
+              else{
+                alert("Wrong email or password")
+              }
+          })
+          .catch(err=>{
+            alert("Wronng email or password")
+          })
+
+
+
+
+
+      }
+
+
+
+
+    </script>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
