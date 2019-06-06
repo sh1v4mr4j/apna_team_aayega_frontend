@@ -25,9 +25,9 @@
                       </a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" class="dropdown-divider" href="#">
-                            <div class="row"><img src="propic.png" style="width: 20px; height: 20px">Profile</div>
+                                <button class="btn btn-light" onclick="openProfile()"><div class="row"><img src="propic.png" style="width: 20px; height: 20px">Profile</div></button>
                             <div class="dropdown-divider"></div></a>
-                        <a class="dropdown-item" class="dropdown-divider" href="#"><div class="row"><img src="settings.png" style="width: 20px; height: 20px"><span> Settings</span></div>
+                        <a class="dropdown-item" class="dropdown-divider" ><div class="row"><img src="settings.png" style="width: 20px; height: 20px"><span> Settings</span></div>
                             <div class="dropdown-divider"></div></a>
                         <a class="dropdown-item" class="dropdown-divider" href="index.html"><div class="row"><img src="logout.png" style="width: 20px; height: 20px">Logout</div>
                             <div class="dropdown-divider"></div></a>
@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col-lg-2" id="tagss" style="margin-top: 2%">
                         <div class="row">
-                                <button type="button" class="btn btn-primary" id="Adhoc"style="background-color: #222831;color:white;border: transparent; width:200%"><b>Tags</b></button>
+                                <button type="button" class="btn btn-primary" id="Adhoc"style="background-color: #222831;color:white;border: transparent; width:200%" onclick="openMain()"><b>No Tags</b></button>
                         </div>
                         <div class="dropdown-divider" style="color:black"></div>
                         <div class="dropdown-divider" style="color:black"></div>
@@ -117,6 +117,11 @@
                     window.open("tagPage.html","_self");
 
             }
-
+            function openProfile(){
+                window.open('userProfile.html',"_self");
+            }
+            function openMain(){
+                window.open('main.html',"_self");
+            }
 </script>
 </html>
